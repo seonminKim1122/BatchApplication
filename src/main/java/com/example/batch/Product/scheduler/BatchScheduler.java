@@ -23,7 +23,7 @@ public class BatchScheduler {
     private final ProductManagementJobConfiguration productManagementJobConfiguration;
     private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    @Scheduled(cron = "0 0 4 * * *", zone = "JST") // 도쿄와 서울이 시차가 없으므로 도쿄 기준 새벽 4시에 실행
+    @Scheduled(cron = "0 0 17 * * *", zone = "JST") // 도쿄와 서울이 시차가 없으므로 도쿄 기준 새벽 4시에 실행
     public void runJob() {
         // job parameter 설정
         Map<String, JobParameter> map = new HashMap<>();

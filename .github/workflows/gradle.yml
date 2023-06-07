@@ -33,8 +33,8 @@ jobs:
     - name: Create and Push Image to Docker Hub
       run: |
         docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-        docker build --tag ${{secrets.DOCKER_USERNAME}}/batchApplication:productManagement .
-        docker push ${{secrets.DOCKER_USERNAME}}/BatchApplication:ProductManagement
+        docker build --tag ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement .
+        docker push ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
         
     - name: Pull image and run
       uses: appleboy/ssh-action@master
@@ -43,6 +43,6 @@ jobs:
         username: ubuntu
         password: ${{secrets.EC2_PASSWORD}}
         scripts: |
-          docker pull ${{secrets.DOCKER_USERNAME}}/batchApplication:productManagement
+          docker pull ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
           docker stop BatchApplication
-          docker run -d --rm --name BatchApplication -p 80:8081 ${{secrets.DOCKER_USERNAME}}/batchApplication:productManagement
+          docker run -d --rm --name BatchApplication -p 80:8081 ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement

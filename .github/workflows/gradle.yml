@@ -42,7 +42,7 @@ jobs:
       with:
         host: 54.180.71.246
         username: ubuntu
-        key: ${{secrets.PRIVATE_KEY}}
+        password: ${{secrets.EC2_PASSWORD}}
         scripts: |
           docker pull ${{secrets.DOCKER_USERNAME}}/BatchApplication:ProductManagement
           docker stop BatchApplication

@@ -47,4 +47,4 @@ jobs:
           docker rm BatchApplication
           docker rmi ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
           docker pull ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
-          docker run -d --name BatchApplication -p 80:8081 ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
+          docker run -d --name BatchApplication -p 81:8081 ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement

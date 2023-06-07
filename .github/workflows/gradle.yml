@@ -19,7 +19,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Create application.yml
-      run:
+      run: |
         cd ./src/main/resources
         echo "${{secrets.APPLICATION_YML}}" > application.yml
       shell: bash

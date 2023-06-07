@@ -42,6 +42,7 @@ jobs:
         host: 54.180.71.246
         username: ubuntu
         password: ${{secrets.EC2_PASSWORD}}
+        envs: GITHUB_SHA
         scripts: |
           docker pull ${{secrets.DOCKER_USERNAME}}/batchapplication:productmanagement
           docker stop BatchApplication

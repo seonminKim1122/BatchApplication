@@ -1,5 +1,6 @@
 package com.example.batch.Product.scheduler;
 
+import com.example.batch.Product.job.CalcTopSoldProductJobConfiguration;
 import com.example.batch.Product.job.ProductManagementJobConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,17 +23,32 @@ public class BatchScheduler {
 
     private final JobLauncher jobLauncher;
     private final ProductManagementJobConfiguration productManagementJobConfiguration;
+    private final CalcTopSoldProductJobConfiguration calcTop90JobConfiguration;
     private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    @Scheduled(cron = "0 0 5 * * *", zone = "JST") // 도쿄와 서울이 시차가 없으므로 도쿄 기준 새벽 5시에 실행
-    public void runJob() {
+    @Scheduled(cron = "0 0 5 * * *", zone = "Asia/Seoul")
+    public void runInventoryManagementJob() {
         // job parameter 설정
         Map<String, JobParameter> map = new HashMap<>();
-        String today = LocalDate.now().format(FORMATTER);
+        String today = LocalDate.now(ZoneId.of("Asia/Seoul")).format(FORMATTER);
         map.put("date", new JobParameter(today));
         JobParameters jobParameters = new JobParameters(map);
         try {
             jobLauncher.run(productManagementJobConfiguration.productManagementJob(), jobParameters);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    @Scheduled(cron = "0 17 15 * * *", zone = "Asia/Seoul")
+    public void runCalcTop90ProductJob() {
+        Map<String, JobParameter> map = new HashMap<>();
+        String today = LocalDate.now(ZoneId.of("Asia/Seoul")).format(FORMATTER);
+        map.put("date", new JobParameter(today));
+        JobParameters jobParameters = new JobParameters(map);
+
+        try {
+            jobLauncher.run(calcTop90JobConfiguration.calcTopSoldProductJob(), jobParameters);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

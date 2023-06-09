@@ -1,6 +1,6 @@
 package com.example.batch.Product.job;
 
-import com.example.batch.Product.domain.Product;
+import com.example.batch.Product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -62,7 +62,7 @@ public class ProductManagementJobConfiguration {
     @Bean
     public ItemProcessor<Product, Product> productItemProcessor() {
         return product -> {
-            product.setAmount(1000L);
+            product.setAmount(1000);
             return product;
         };
     }

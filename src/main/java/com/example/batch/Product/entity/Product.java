@@ -1,5 +1,6 @@
-package com.example.batch.Product.domain;
+package com.example.batch.Product.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class Product {
     private Long id;
 
     @Column(name = "amount")
-    private Long amount;
+    private int amount;
 
     @Column(name = "categorya")
     private String categoryA;
@@ -32,7 +33,4 @@ public class Product {
 
     @Column(name = "product_name")
     private String productName;
-
-    @Column(name = "price_category")
-    private int priceCategory;
 }

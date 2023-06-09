@@ -18,6 +18,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import javax.sql.DataSource;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +35,8 @@ public class CalcTopSoldProductJobConfiguration {
     private final RedisTemplate<String, List<?>> redisTemplate;
 
     private final int chunkSize = 20;
-    private final String prefix = "product::";
+    private final String prefix = "popular::";
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Bean
     public Job calcTopSoldProductJob() {
@@ -52,13 +56,14 @@ public class CalcTopSoldProductJobConfiguration {
 
     @Bean
     public JdbcCursorItemReader<Product> topSoldProductReader() {
+        String today = LocalDate.now(ZoneId.of("Asia/Seoul")).format(FORMATTER);
         return new JdbcCursorItemReaderBuilder<Product>()
                 .fetchSize(chunkSize)
                 .dataSource(dataSource)
                 .rowMapper(new ProductRowMapper())
                 .sql("SELECT p.* " +
                      "FROM products p LEFT JOIN purchase ph ON p.product_id = ph.product_product_id " +
-                     "WHERE DATE_FORMAT(ph.create_at, '%Y-%m-%d') = CURDATE() - INTERVAL 1 DAY " +
+                     "WHERE DATE_FORMAT(ph.create_at, '%Y-%m-%d') = '" + today + "' - INTERVAL 1 DAY " +
                      "GROUP BY p.product_id " +
                      "ORDER BY sum(ph.amount) DESC " +
                      "LIMIT " + chunkSize)

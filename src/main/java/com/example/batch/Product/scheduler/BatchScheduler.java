@@ -40,7 +40,7 @@ public class BatchScheduler {
         }
     }
 
-    @Scheduled(cron = "0 17 15 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void runCalcTop90ProductJob() {
         Map<String, JobParameter> map = new HashMap<>();
         String today = LocalDate.now(ZoneId.of("Asia/Seoul")).format(FORMATTER);

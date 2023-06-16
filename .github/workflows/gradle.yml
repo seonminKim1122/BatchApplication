@@ -41,7 +41,7 @@ jobs:
       with:
         host: 54.180.71.246
         username: ubuntu
-        password: ${{secrets.EC2_PASSWORD}}
+        key: ${{secrets.PRIVATE_KEY}}
         script: |
           docker stop BatchApplication
           docker rm BatchApplication

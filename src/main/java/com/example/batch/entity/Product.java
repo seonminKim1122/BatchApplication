@@ -1,6 +1,5 @@
-package com.example.batch.Product.entity;
+package com.example.batch.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

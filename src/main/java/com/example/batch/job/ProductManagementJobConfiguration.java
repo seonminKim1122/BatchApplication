@@ -1,6 +1,6 @@
-package com.example.batch.Product.job;
+package com.example.batch.job;
 
-import com.example.batch.Product.entity.Product;
+import com.example.batch.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

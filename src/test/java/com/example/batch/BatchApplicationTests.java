@@ -26,7 +26,7 @@ class BatchApplicationTests {
     void webClientTests() {
         WebClient webClient =
                 WebClient.builder()
-                        .baseUrl("http://54.180.71.246")
+                        .baseUrl("http://TestServerLoadBalancer-1450366396.ap-northeast-2.elb.amazonaws.com")
                         .build();
 
         User user = new User("seonmin1", "testPassword");

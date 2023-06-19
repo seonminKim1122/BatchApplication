@@ -42,11 +42,11 @@ public class BatchScheduler {
     }
 
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
-    public void runCalcTop90ProductJob() {
+    public void runCalcTopSoldProductJob() {
         JobParameters jobParameters = createJobParameters(LocalDate.now(ZoneId.of("Asia/Seoul")));
 
         try {
-            jobLauncher.run(calcTop90JobConfiguration.calcTopSoldProductJob(), jobParameters);
+            jobLauncher.run(calcTop90JobConfiguration.calcPopularProductJob(), jobParameters);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

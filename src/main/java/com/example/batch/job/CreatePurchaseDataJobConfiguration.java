@@ -36,7 +36,7 @@ public class CreatePurchaseDataJobConfiguration {
     public Step createPurchaseDataStep() {
         String password = "testPassword";
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://54.180.71.246")
+                .baseUrl("http://TestServerLoadBalancer-1450366396.ap-northeast-2.elb.amazonaws.com")
                 .build();
         long productCnt = productRepository.getCount();
         Random random = new Random();

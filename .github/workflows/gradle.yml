@@ -39,7 +39,7 @@ jobs:
     - name: Pull image and run
       uses: appleboy/ssh-action@master
       with:
-        host: 54.180.71.246
+        host: 3.35.4.43
         username: ubuntu
         key: ${{secrets.PRIVATE_KEY}}
         script: |

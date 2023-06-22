@@ -62,7 +62,7 @@ public class CalcTopSoldProductJobConfiguration {
 
     @Bean
     public JdbcCursorItemReader<Product> popularProductReader() {
-        String yesterday = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1L).format(FORMATTER);
+        String yesterday = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(2L).format(FORMATTER);
 
         return new JdbcCursorItemReaderBuilder<Product>()
                 .fetchSize(chunkSize)
@@ -85,7 +85,8 @@ public class CalcTopSoldProductJobConfiguration {
     private ItemWriter<Product> popularProductWriter() { // Redis 에 저장하기
         return list -> {
             List<PopularProduct> popularProducts = list.stream().map(PopularProduct::new).toList();
-            String key = prefix + new SimpleDateFormat("yyyyMMdd").format(new Date());
+            String key = prefix + new SimpleDateFormat("yy. M. d.").format(new Date());
+            System.out.println(key);
             redisTemplate.delete(key);
             redisTemplate.opsForValue().setIfAbsent(key, popularProducts);
             redisTemplate.expire(key, Duration.ofHours(24));

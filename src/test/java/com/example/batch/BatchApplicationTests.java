@@ -26,7 +26,7 @@ class BatchApplicationTests {
     void webClientTests() {
         WebClient webClient =
                 WebClient.builder()
-                        .baseUrl("http://TestServerLoadBalancer-1450366396.ap-northeast-2.elb.amazonaws.com")
+                        .baseUrl("http://HotdealLoadBalancer-1501345169.ap-northeast-2.elb.amazonaws.com")
                         .build();
 
         User user = new User("seonmin1", "testPassword");
@@ -37,11 +37,10 @@ class BatchApplicationTests {
 
         String token = response.headers().asHttpHeaders().get("Authorization").get(0);
 
-        long productId = productRepository.getCount();
         Map<String, Object> body = new HashMap<>();
         body.put("quantity", 20);
         String res = webClient.post()
-                .uri("/products/{productId}", productId)
+                .uri("/products/{productId}", 1000)
                 .header("Authorization", token)
                 .bodyValue(body)
                 .retrieve()
